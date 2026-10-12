@@ -9,6 +9,8 @@ import Register from './pages/Register/Register.jsx';
 import PatientDashboard from './pages/PatientDashboard/PatientDashboard.jsx';
 import PharmacistDashboard from './pages/PharmacistDashboard/PharmacistDashboard.jsx';
 import AdminDashboard from './pages/AdminDashboard/AdminDashboard.jsx';
+import Upload from './pages/Upload/Upload.jsx';
+import MyPrescriptions from './pages/MyPrescriptions/MyPrescriptions.jsx';
 import Forbidden from './pages/Forbidden/Forbidden.jsx';
 import NotFound from './pages/NotFound/NotFound.jsx';
 
@@ -50,9 +52,11 @@ export default function App() {
             <Route path="/" element={<RoleBasedRedirect />} />
             <Route path="/dashboard" element={<RoleBasedRedirect />} />
 
-            {/* Patient Dashboard - Protected for 'patient' role only */}
+            {/* Patient Routes - Protected for 'patient' role only */}
             <Route element={<ProtectedRoute roles={['patient']} />}>
               <Route path="/patient" element={<PatientDashboard />} />
+              <Route path="/upload" element={<Upload />} />
+              <Route path="/my-prescriptions" element={<MyPrescriptions />} />
             </Route>
 
             {/* Pharmacist Dashboard - Protected for 'pharmacist' role only */}

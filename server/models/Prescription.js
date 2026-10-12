@@ -1,79 +1,136 @@
 import mongoose from 'mongoose';
 import { getIsMongooseConnected, memoryStore } from '../utils/db.js';
 
-export const prescriptionSchema = new mongoose.Schema(
+export const prescriptionHistorySchema = new mongoose.Schema(
   {
-    rxNumber: {
+    status: {
       type: String,
       required: true,
-      unique: true,
     },
+    by: {
+      type: String,
+      required: true,
+    },
+    at: {
+      type: Date,
+      default: Date.now,
+    },
+    comment: {
+      type: String,
+      default: '',
+    },
+  },
+  { _id: false }
+);
+
+export const prescriptionSchema = new mongoose.Schema(
+  {
     patientId: {
       type: String,
       required: true,
+      index: true,
     },
     patientName: {
       type: String,
-      required: true,
+      default: '',
     },
     patientDob: {
       type: String,
       default: '',
     },
-    prescriberName: {
+    rxNumber: {
       type: String,
-      required: true,
+      default: () => `RX-2026-${Math.floor(1000 + Math.random() * 9000)}`,
     },
-    prescriberNpi: {
+    fileKey: {
       type: String,
-      required: true,
+      default: null,
     },
-    clinicName: {
+    originalName: {
+      type: String,
+      default: null,
+    },
+    mimeType: {
+      type: String,
+      default: null,
+    },
+    size: {
+      type: Number,
+      default: 0,
+    },
+    status: {
+      type: String,
+      enum: [
+        'SUBMITTED',
+        'IN_REVIEW',
+        'APPROVED',
+        'REJECTED',
+        'CHANGES_REQUESTED',
+        // Backwards compatibility aliases
+        'pending',
+        'verified',
+        'flagged',
+      ],
+      default: 'SUBMITTED',
+      index: true,
+    },
+    reviewerId: {
+      type: String,
+      default: null,
+    },
+    reviewerName: {
+      type: String,
+      default: null,
+    },
+    notes: {
       type: String,
       default: '',
     },
+    history: {
+      type: [prescriptionHistorySchema],
+      default: [],
+    },
+
+    // Clinical prescription metadata
     medication: {
       type: String,
-      required: true,
+      default: '',
     },
     dosage: {
       type: String,
-      required: true,
+      default: '',
     },
     quantity: {
       type: Number,
-      required: true,
+      default: 30,
     },
     refills: {
       type: Number,
       default: 0,
     },
+    prescriberName: {
+      type: String,
+      default: '',
+    },
+    prescriberNpi: {
+      type: String,
+      default: '',
+    },
+    clinicName: {
+      type: String,
+      default: '',
+    },
     diagnosis: {
       type: String,
       default: '',
     },
-    status: {
-      type: String,
-      enum: ['pending', 'verified', 'flagged', 'rejected'],
-      default: 'pending',
-    },
     allergyCheck: {
       type: String,
-      enum: ['passed', 'warning', 'unknown'],
       default: 'passed',
     },
     interactionCheck: {
       type: String,
-      enum: ['none_detected', 'moderate', 'severe'],
       default: 'none_detected',
-    },
-    verifiedBy: {
-      type: String,
-      default: null,
-    },
-    verifiedByName: {
-      type: String,
-      default: null,
     },
     verificationNotes: {
       type: String,
@@ -81,6 +138,14 @@ export const prescriptionSchema = new mongoose.Schema(
     },
     verificationDate: {
       type: Date,
+      default: null,
+    },
+    verifiedBy: {
+      type: String,
+      default: null,
+    },
+    verifiedByName: {
+      type: String,
       default: null,
     },
   },
@@ -118,17 +183,25 @@ export const Prescription = {
     if (getIsMongooseConnected()) {
       return MongoosePrescriptionModel.create(data);
     }
+    const rxId = `rx_${Date.now()}_${Math.floor(Math.random() * 9000 + 1000)}`;
     const newRx = {
-      _id: `rx_${Date.now()}_${Math.floor(Math.random() * 9000 + 1000)}`,
-      id: `rx_${Date.now()}_${Math.floor(Math.random() * 9000 + 1000)}`,
+      _id: rxId,
+      id: rxId,
       rxNumber: data.rxNumber || `RX-2026-${Math.floor(Math.random() * 9000 + 1000)}`,
-      status: 'pending',
+      status: data.status || 'SUBMITTED',
+      history: data.history || [
+        {
+          status: data.status || 'SUBMITTED',
+          by: data.patientName || 'Patient',
+          at: new Date(),
+          comment: 'Prescription document submitted for verification',
+        },
+      ],
+      reviewerId: data.reviewerId || null,
+      reviewerName: data.reviewerName || null,
+      notes: data.notes || '',
       allergyCheck: data.allergyCheck || 'passed',
       interactionCheck: data.interactionCheck || 'none_detected',
-      verifiedBy: null,
-      verifiedByName: null,
-      verificationNotes: null,
-      verificationDate: null,
       createdAt: new Date(),
       updatedAt: new Date(),
       ...data,
@@ -143,12 +216,21 @@ export const Prescription = {
     }
     const index = memoryStore.prescriptions.findIndex((p) => p._id === id || p.id === id);
     if (index === -1) return null;
-    memoryStore.prescriptions[index] = {
-      ...memoryStore.prescriptions[index],
+
+    const existing = memoryStore.prescriptions[index];
+    const updated = {
+      ...existing,
       ...updateData,
       updatedAt: new Date(),
     };
-    return memoryStore.prescriptions[index];
+
+    // If history is appended via $push
+    if (updateData.$push?.history) {
+      updated.history = [...(existing.history || []), updateData.$push.history];
+    }
+
+    memoryStore.prescriptions[index] = updated;
+    return updated;
   },
 };
 
