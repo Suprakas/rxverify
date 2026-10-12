@@ -1,0 +1,72 @@
+.rx-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-full);
+  font-size: var(--font-xs);
+  font-weight: var(--font-semibold);
+  line-height: 1.25;
+  text-transform: capitalize;
+  border: 1px solid transparent;
+  width: fit-content;
+}
+
+.rx-badge__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background-color: currentColor;
+}
+
+/* Status variants */
+.rx-badge--pending {
+  background-color: var(--color-warning-light);
+  color: var(--color-warning-hover);
+  border-color: rgba(217, 119, 6, 0.25);
+}
+
+.rx-badge--verified,
+.rx-badge--approved,
+.rx-badge--active {
+  background-color: var(--color-success-light);
+  color: var(--color-success-hover);
+  border-color: rgba(22, 163, 74, 0.25);
+}
+
+.rx-badge--rejected {
+  background-color: var(--color-danger-light);
+  color: var(--color-danger-hover);
+  border-color: rgba(220, 38, 38, 0.25);
+}
+
+.rx-badge--flagged {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border-color: rgba(153, 27, 27, 0.25);
+}
+
+/* Role variants */
+.rx-badge--admin {
+  background-color: #f3e8ff;
+  color: #7e22ce;
+  border-color: rgba(126, 34, 206, 0.25);
+}
+
+.rx-badge--pharmacist {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-hover);
+  border-color: rgba(2, 132, 199, 0.25);
+}
+
+.rx-badge--patient {
+  background-color: #ecfdf5;
+  color: #047857;
+  border-color: rgba(4, 120, 87, 0.25);
+}
+
+.rx-badge--default {
+  background-color: var(--color-surface-hover);
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+}

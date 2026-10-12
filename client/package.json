@@ -1,0 +1,26 @@
+{
+  "name": "rxverify-client",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.9.1",
+    "@reduxjs/toolkit": "^2.13.0",
+    "axios": "^1.20.0",
+    "react": "^19.0.1",
+    "react-dom": "^19.0.1",
+    "react-hook-form": "^7.90.0",
+    "react-redux": "^9.3.0",
+    "react-router-dom": "^7.18.4",
+    "zod": "^4.6.6"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.1.1",
+    "vite": "^8.3.0"
+  }
+}

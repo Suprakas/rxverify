@@ -1,0 +1,35 @@
+.rx-spinner {
+  display: inline-block;
+  border-radius: var(--radius-full);
+  border: 2px solid rgba(0, 0, 0, 0.15);
+  border-top-color: var(--color-primary);
+  animation: rx-spin 0.65s linear infinite;
+  box-sizing: border-box;
+}
+
+.rx-spinner--sm {
+  width: 14px;
+  height: 14px;
+  border-width: 2px;
+}
+
+.rx-spinner--md {
+  width: 20px;
+  height: 20px;
+  border-width: 2.5px;
+}
+
+.rx-spinner--lg {
+  width: 32px;
+  height: 32px;
+  border-width: 3px;
+}
+
+@keyframes rx-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

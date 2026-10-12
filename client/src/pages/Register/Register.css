@@ -1,0 +1,146 @@
+.rx-register-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  background: radial-gradient(circle at top, #e0f2fe 0%, var(--color-bg) 60%);
+}
+
+.rx-register-card {
+  width: 100%;
+  max-width: 620px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-5);
+}
+
+.rx-register-header {
+  text-align: center;
+  margin-bottom: var(--space-4);
+}
+
+.rx-register-logo {
+  display: inline-flex;
+  margin-bottom: var(--space-2);
+}
+
+.rx-register-logo-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background-color: var(--color-primary);
+  color: var(--color-primary-contrast);
+  font-size: var(--font-xl);
+  font-weight: var(--font-extrabold);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.rx-register-title {
+  font-size: var(--font-2xl);
+  font-weight: var(--font-bold);
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+}
+
+.rx-register-subtitle {
+  font-size: var(--font-sm);
+  color: var(--color-text-muted);
+}
+
+.rx-role-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.rx-role-option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-3) var(--space-2);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  background-color: var(--color-surface);
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.rx-role-radio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.rx-role-option:hover {
+  border-color: var(--color-border-strong);
+  background-color: var(--color-surface-hover);
+}
+
+.rx-role-option--active {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-light);
+}
+
+.rx-role-title {
+  font-weight: var(--font-bold);
+  font-size: var(--font-sm);
+  color: var(--color-text);
+  margin-bottom: 2px;
+}
+
+.rx-role-option--active .rx-role-title {
+  color: var(--color-primary-hover);
+}
+
+.rx-role-desc {
+  font-size: var(--font-xs);
+  color: var(--color-text-muted);
+  line-height: 1.2;
+}
+
+.rx-form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.rx-register-submit-btn {
+  margin-top: var(--space-2);
+}
+
+.rx-register-footer {
+  text-align: center;
+  font-size: var(--font-sm);
+  color: var(--color-text-muted);
+  padding-top: var(--space-3);
+  margin-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.rx-register-link {
+  font-weight: var(--font-semibold);
+  color: var(--color-primary);
+}
+
+@media (max-width: 640px) {
+  .rx-register-card {
+    padding: var(--space-4);
+  }
+
+  .rx-role-selector {
+    grid-template-columns: 1fr;
+  }
+
+  .rx-form-grid-2 {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
