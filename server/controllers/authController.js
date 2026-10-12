@@ -253,3 +253,25 @@ export async function getMe(req, res, next) {
     next(err);
   }
 }
+
+export async function getUsers(req, res, next) {
+  try {
+    const users = await User.find({});
+    res.status(200).json({
+      success: true,
+      data: users.map((u) => ({
+        id: u._id || u.id,
+        name: u.name,
+        email: u.email,
+        role: u.role,
+        licenseNumber: u.licenseNumber,
+        phone: u.phone,
+        dateOfBirth: u.dateOfBirth,
+        createdAt: u.createdAt,
+      })),
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+

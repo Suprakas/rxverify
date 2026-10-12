@@ -1,6 +1,9 @@
 import { verifyAccessToken } from '../utils/jwt.js';
 
-export function authenticate(req, res, next) {
+/**
+ * Authentication middleware that verifies JWT access token
+ */
+export function requireAuth(req, res, next) {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -31,12 +34,16 @@ export function authenticate(req, res, next) {
   }
 }
 
-export function authorizeRoles(...roles) {
+/**
+ * Authorization middleware for Role-Based Access Control (RBAC)
+ * @param  {...string} roles Allowed roles (e.g. 'admin', 'pharmacist', 'patient')
+ */
+export function authorize(...roles) {
   return (req, res, next) => {
     if (!req.user) {
       return res.status(401).json({
         success: false,
-        error: 'Authentication required',
+        error: 'Authentication required: no active user context',
       });
     }
 
@@ -50,3 +57,7 @@ export function authorizeRoles(...roles) {
     next();
   };
 }
+
+// Backward-compatible aliases
+export const authenticate = requireAuth;
+export const authorizeRoles = authorize;

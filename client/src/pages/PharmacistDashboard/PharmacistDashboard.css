@@ -1,0 +1,99 @@
+.rx-pharma-dash {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.rx-pharma-license-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-hover);
+  padding: 4px var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--font-xs);
+  font-weight: var(--font-bold);
+  margin-bottom: var(--space-2);
+  border: 1px solid rgba(2, 132, 199, 0.2);
+}
+
+.rx-pharma-license-tag__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-success);
+}
+
+.rx-pharma-col-rx {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rx-pharma-rx-num {
+  font-family: var(--font-mono);
+  font-weight: var(--font-bold);
+  color: var(--color-primary);
+  font-size: var(--font-xs);
+}
+
+.rx-pharma-rx-date {
+  font-size: var(--font-xs);
+  color: var(--color-text-muted);
+}
+
+.rx-pharma-col-patient {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rx-pharma-patient-name {
+  font-weight: var(--font-semibold);
+  color: var(--color-text);
+}
+
+.rx-pharma-patient-dob {
+  font-size: var(--font-xs);
+  color: var(--color-text-muted);
+}
+
+.rx-pharma-col-med {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rx-pharma-med-name {
+  color: var(--color-text);
+  font-size: var(--font-sm);
+}
+
+.rx-pharma-med-sig {
+  font-size: var(--font-xs);
+  color: var(--color-text-muted);
+}
+
+.rx-pharma-med-qty {
+  font-size: var(--font-xs);
+  color: var(--color-text-subtle);
+}
+
+.rx-pharma-col-doc {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: var(--font-xs);
+}
+
+.rx-pharma-doc-npi {
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+}
+
+@media (max-width: 768px) {
+  .rx-pharma-dash {
+    gap: var(--space-3);
+  }
+}
